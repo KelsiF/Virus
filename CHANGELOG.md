@@ -1,2 +1,5 @@
 # v. 1.0
-- Added basic movement system
+- Added player movement system
+
+# v. 1.0.1
+- Added enemy AI

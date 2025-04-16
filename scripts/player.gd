@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+var health = 20
 var speed = 300
 var speedMultiplier = 1.0
 
