@@ -33,3 +33,11 @@ func player_jump(delta):
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			velocity.y = -400
+
+
+func _on_character_body_2d_on_attack(damage) -> void:
+	if health > 0:
+		health = health - damage
+		print(health)
+	elif health <= 0:
+		get_tree().reload_current_scene()

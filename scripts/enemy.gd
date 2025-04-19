@@ -2,17 +2,19 @@ extends CharacterBody2D
 
 var speed = 250 # need speed 250 for move
 var health = 10
-var damage = 1
-
+var damage = 2.5
 var direction = "left"
+
 
 @onready var player = get_parent().get_node("Player")
 @onready var ray_cast: RayCast2D = $Sprite2D/raycast
 
+signal onAttack
+
 func _ready() -> void:
+	#Main.enemy_attack_signal.connect(_on_attack)
 	pass
 
-@warning_ignore("unused_parameter")
 func _physics_process(delta):
 	enemy_falling(delta)
 	look_player(delta)
@@ -56,3 +58,9 @@ func enemy_move(delta, direction: String):
 		velocity.x = speed
 	elif direction == "left":
 		velocity.x = -speed
+
+
+func _on_attack_radius_body_entered(body: Node2D) -> void:
+	if body == player:
+		onAttack.emit(damage)
+		await get_tree().create_timer(0.25).timeout

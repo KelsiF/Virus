@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyykk7moehhcn"]
+
+[ext_resource type="Texture2D" uid="uid://beku1b1iqdps6" path="res://textures/block.png" id="1_0j2vq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0j2vq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jmu65"]
+texture = ExtResource("1_0j2vq")
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_vennd"]
+tile_size = Vector2i(10, 10)
+physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_0j2vq")
+sources/0 = SubResource("TileSetAtlasSource_jmu65")
+
+[node name="BlockTilemap" type="TileMapLayer"]
+texture_filter = 1
+tile_set = SubResource("TileSet_vennd")
