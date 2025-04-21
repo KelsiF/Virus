@@ -1,0 +1,131 @@
+[gd_scene load_steps=16 format=3 uid="uid://clui1jamhxlle"]
+
+[ext_resource type="Texture2D" uid="uid://b5e024l30edyr" path="res://textures/player_attack-Sheet.png" id="1_1owv6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a3h5k"]
+
+[sub_resource type="GDScript" id="GDScript_1owv6"]
+script/source = "extends Node2D
+
+signal attack_exists
+
+func _ready() -> void:
+	$AnimatedSprite2D.play(\"default\")
+
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	await call_deferred(\"queue_free\")
+	attack_exists.emit()
+
+
+func _on_signal_rotate(direction: String):
+	if direction == \"left\":
+		position = Vector2(position.x-100, position.y)
+		$AnimatedSprite2D.flip_h = false
+	elif direction == \"right\":
+		position = Vector2(position.x+100, position.y)
+		$AnimatedSprite2D.flip_h = true
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nxat"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(0, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxo0i"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(15, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qotk"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(30, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mhpo"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(45, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrlfr"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(60, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fajj4"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(75, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejsks"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(90, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8typp"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(105, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jskx"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(120, 0, 15, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_buepd"]
+atlas = ExtResource("1_1owv6")
+region = Rect2(135, 0, 15, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dtvd7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nxat")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxo0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qotk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mhpo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rrlfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fajj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejsks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8typp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jskx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_buepd")
+}],
+"loop": false,
+"name": &"default",
+"speed": 7.5
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nxat"]
+size = Vector2(16, 34)
+
+[node name="PlayerAttack" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_a3h5k")
+script = SubResource("GDScript_1owv6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_dtvd7")
+autoplay = "default"
+frame = 9
+frame_progress = 1.0
+offset = Vector2(2, 2)
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_1nxat")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

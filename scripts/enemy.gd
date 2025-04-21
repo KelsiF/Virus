@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 var speed = 250 # need speed 250 for move
-var health = 10
-var damage = 2.5
+var health = 5
+var damage = 1
 var direction = "left"
 
 
@@ -64,3 +64,11 @@ func _on_attack_radius_body_entered(body: Node2D) -> void:
 	if body == player:
 		onAttack.emit(damage)
 		await get_tree().create_timer(0.25).timeout
+
+
+func _on_detect_player_attack_body_entered(body: Node2D) -> void:
+	if body.name == "PlayerAttack":
+		if health > 0:
+			health -= 2
+		elif health <= 0:
+			await call_deferred("queue_free")

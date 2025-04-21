@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://berki37hyxe3r"]
+[gd_scene load_steps=6 format=3 uid="uid://berki37hyxe3r"]
 
 [ext_resource type="Texture2D" uid="uid://bu1ivjd4m336l" path="res://textures/enemy.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://cfqe3smvlltsg" path="res://scripts/enemy.gd" id="1_md0e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ra3w"]
+size = Vector2(68, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(27, 28)
@@ -10,9 +13,20 @@ size = Vector2(27, 28)
 radius = 20.025
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_md0e3")
 
+[node name="detectPlayerAttack" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectPlayerAttack"]
+position = Vector2(5, 0)
+shape = SubResource("RectangleShape2D_4ra3w")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_md0e3")
 
@@ -24,9 +38,11 @@ texture = ExtResource("1_7p1mj")
 target_position = Vector2(-500, 0)
 
 [node name="attack_radius" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_radius"]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_md0e3")
 
+[connection signal="body_entered" from="detectPlayerAttack" to="." method="_on_detect_player_attack_body_entered"]
 [connection signal="body_entered" from="attack_radius" to="." method="_on_attack_radius_body_entered"]

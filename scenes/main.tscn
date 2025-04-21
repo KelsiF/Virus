@@ -10,7 +10,7 @@
 position = Vector2(79, 576)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(934, 589)
+position = Vector2(939, 555)
 
 [node name="BlockTilemap" parent="." instance=ExtResource("4_jyhfs")]
 position = Vector2(138, 449)
